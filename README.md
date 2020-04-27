@@ -22,6 +22,9 @@ you need the following to start working on the project on your local computer:
       * Pip
       * virtualenv
       * A text Editor
+      
+## Bugs
+The application does not display the website on the browser.
 
 ## Technologies used 
 * Python v3.6
