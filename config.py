@@ -2,12 +2,11 @@ import os
 
 class Config:
 
-    NEWS_SOURCES_BASE_URL ='http://newsapi.org/v2/top-headlines?language=en&category={}&apiKey={}'
-    ARTICLES_BASE_URL = 'http://newsapi.org/v2/everything?language=en&sources={}&apiKey={}'
+    BASE_URL ='http://newsapi.org/v2/{}?apiKey={}&{}'
     NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
-    @staticmethod
-    def init_app(app):
-        pass
+  
+    
+        
 
 
 

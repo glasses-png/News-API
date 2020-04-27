@@ -1,28 +1,28 @@
 {% extends 'base.html'%}
-{% import 'macros.html' as macro%}
+{% import 'macros.html' as macro %}
 
-{% block content%}
-<div class="container">
+{% block content %}
+<div class="container-fluid">
 
-  <h3> Top Breaking News</h3>
-  <ul>
-      {{ macro.displaySourceList(sources)}}
-  </ul>
+  <h3> Top General News</h3>
+  
+      {{ macro.displaysArticles(general)}}
+
 
   <h3> Top Technology News  </h3>
-  <ul>
-      {{ macro.displaySourceList(technology_sources)}}
-  </ul>
+
+      {{ macro.displaysArticles(technology)}}
+  
 
   <h3>Top Entertainment News</h3>
-  <ul>
-      {{ macro.displaySourceList(entertainment_sources)}}
-  </ul>
+
+      {{ macro.displaysArticles(entertainment)}}
+  
 
   <h3>Top Sports News</h3>
-  <ul>
-      {{ macro.displaySourceList(sports_sources)}}
-  </ul>
+
+      {{ macro.displaysArticles(sports)}}
+
 
 </div>
-{%endblock%}
+{% endblock %}

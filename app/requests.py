@@ -14,15 +14,15 @@ articles_url = None
 def configure_request(app):
 	global api_key,base_url,articles_url
 	api_key = app.config['NEWS_API_KEY']
-	base_url = app.config['NEWS_SOURCES_BASE_URL']
-	articles_url = app.config['ARTICLES_BASE_URL']
+	base_url = app.config['BASE_URL']
+	# articles_url = app.config['ARTICLES_BASE_URL']
 
-def get_sources(category):
+def get_sources():
 	'''
 	Function that gets the json response to our url request
 	'''
-	get_sources_url = base_url.format(category,api_key)
-
+	get_sources_url = base_url.format('sources',api_key,'')
+	
 	with urllib.request.urlopen(get_sources_url) as url:
 		get_sources_data = url.read()
 		get_sources_response = json.loads(get_sources_data)
@@ -61,11 +61,11 @@ def process_sources(sources_list):
 
 	return sources_results
 
-def get_articles(id):
+def get_articles(endpoint,query):
 	'''
 	Function that processes the articles and returns a list of articles objects
 	'''
-	get_articles_url = articles_url.format(id,api_key)
+	get_articles_url = base_url.format(endpoint,api_key,query)
 
 	with urllib.request.urlopen(get_articles_url) as url:
 		articles_results = json.loads(url.read())
@@ -73,7 +73,9 @@ def get_articles(id):
 
 		articles_object = None
 		if articles_results['articles']:
-			articles_object = process_articles(articles_results['articles'])
+			articles_list = articles_results ['articles']
+			articles_object = process_articles(articles_list)
+
 
 	return articles_object
 
@@ -82,21 +84,17 @@ def process_articles(articles_list):
 	'''
 	articles_object = []
 	for article_item in articles_list:
-		id = article_item.get('id')
+		source = article_item.get('source')
 		author = article_item.get('author')
 		title = article_item.get('title')
 		description = article_item.get('description')
 		url = article_item.get('url')
-		image = article_item.get('urlToImage')
-		date = article_item.get('publishedAt')
-		
-		if image:
-			articles_result = Articles(id,author,title,description,url,image,date)
+		urlToImage = article_item.get('urlToImage')
+		publishedAt = article_item.get('publishedAt')
+		content = article_item.get('content')
+		if urlToImage == None:
+			urlToImage='static/images/news.jpg'
+		if content:
+			articles_result = Articles(source,author,title,description,url,urlToImage, publishedAt,content)
 			articles_object.append(articles_result)	
-		
-
-		
-
-		
-
 	return articles_object

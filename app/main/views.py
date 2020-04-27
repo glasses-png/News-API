@@ -1,5 +1,5 @@
 from flask import render_template,request,redirect,url_for
-from .import main
+from . import main
 from ..requests import get_sources,get_articles
 from ..models import Sources
 
@@ -9,22 +9,27 @@ def index():
 	'''
 	view root page function that returns the index the page and its data
 	'''
-	sources = get_sources('breaking news')
-	sports_sources = get_sources('sports')
-	technology_sources = get_sources('technology')
-	entertainment_sources = get_sources('entertainment')
+	general = get_articles('top-headlines','category=general')
+	sports = get_articles('top-headlines','category=sports')
+	technology = get_articles('top-headlines','category=technology')
+	entertainment = get_articles('top-headlines','category=entertainment')
 	title = "News Chap Chap"
 
-	return render_template('index.html',title = title, sources = sources,sports_sources = sports_sources,technology_sources = technology_sources,entertainment_sources = entertainment_sources)
+	return render_template('index.html',title = title,general = general, sports= sports,technology=technology,entertainment=entertainment)
+	
 
+@main.route('/sources')
 @main.route('/sources/<id>')
-def articles(id):
+def articles(id=None):
 	'''
 	view articles page
 	'''
-	articles = get_articles(id)
-	title = f'NCC | {id}'
-
-	return render_template('articles.html',title= title,articles = articles)
+	sources=get_sources()
+	from_source = get_articles('top-headlines',f'sources={id}') 
+	if id:
+		return render_template('sources.html',title='Sources',sources=sources)
+		
+	else:
+		return render_template('sources.html',title='Sources',sources=sources)
 
 
