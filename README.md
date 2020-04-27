@@ -24,7 +24,7 @@ you need the following to start working on the project on your local computer:
       * A text Editor
       
 ## Bugs
-The application does not display the website on the browser.
+No known bugs.
 
 ## Technologies used 
 * Python v3.6
